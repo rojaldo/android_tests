@@ -5,6 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface QuotesApi {
-    @GET("/quotes")
-    suspend fun getQuotes() : Response<QuoteList>
+    @GET("apod?api_key=DEMO_KEY")
+    suspend fun getQuotes() : Response<Apod>
 }
