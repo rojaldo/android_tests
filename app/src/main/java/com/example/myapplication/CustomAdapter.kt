@@ -1,9 +1,13 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -20,6 +24,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
     }
 
     // binds the list items to a view
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val ItemsViewModel = mList[position]
@@ -33,7 +38,19 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         holder.textView3.text = ItemsViewModel.text[3].toString()
         holder.textView4.text = ItemsViewModel.text[4].toString()
 
+        // put all cells in a array
+        val cells = arrayOf(holder.cell0, holder.cell1, holder.cell2, holder.cell3, holder.cell4)
+        Log.d("CustomAdapter", "cells: ${cells.indices}")
+        for (i in cells.indices) {
+            if (ItemsViewModel.colorLetters[i] == LetterState.RIGHT) {
+                cells[i].setBackgroundColor(Color.GREEN)
+            } else if (ItemsViewModel.colorLetters[i] == LetterState.WRONG) {
+                cells[i].setBackgroundColor(Color.RED)
+            } else if (ItemsViewModel.colorLetters[i] == LetterState.MISSPLACED) {
+                cells[i].setBackgroundColor(Color.YELLOW)
+            }
 
+        }
     }
 
     // return the number of the items in the list
@@ -48,5 +65,10 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         val textView2: TextView = itemView.findViewById(R.id.textView3)
         val textView3: TextView = itemView.findViewById(R.id.textView4)
         val textView4: TextView = itemView.findViewById(R.id.textView5)
+        val cell0: LinearLayout = itemView.findViewById(R.id.cell_0)
+        val cell1: LinearLayout = itemView.findViewById(R.id.cell_1)
+        val cell2: LinearLayout = itemView.findViewById(R.id.cell_2)
+        val cell3: LinearLayout = itemView.findViewById(R.id.cell_3)
+        val cell4: LinearLayout = itemView.findViewById(R.id.cell_4)
     }
 }
